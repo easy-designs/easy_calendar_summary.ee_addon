@@ -1,0 +1,21 @@
+.easy-calendar-summary-dates {
+	background: #ECF1F4;
+	border-radius: 6px;
+	border: 1px solid #B2BFCC;
+	color: #5f6c74;
+	padding: 4%;
+	overflow: auto;
+	width: 30%;
+	position: absolute;
+	top: -1px;
+	bottom: -1px;
+	left: 103%;
+}
+.easy-calendar-summary-dates ol {
+	list-style: none;
+	margin: .5em 0 0;
+	padding: 0;
+}
+.easy-calendar-summary-dates li::before {
+	content: '\21D2\00A0';
+}
