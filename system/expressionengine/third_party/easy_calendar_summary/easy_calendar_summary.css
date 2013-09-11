@@ -16,6 +16,13 @@
 	margin: .5em 0 0;
 	padding: 0;
 }
+.easy-calendar-summary-dates li {
+	color: #E11842;
+	cursor: pointer;
+}
+.easy-calendar-summary-dates li:hover {
+	text-decoration: underline;
+}
 .easy-calendar-summary-dates li::before {
 	content: '\21D2\00A0';
 }
