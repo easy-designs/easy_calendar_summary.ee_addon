@@ -2,7 +2,7 @@
 
 	var	tap_evt = 'click',
 	 	$calendar = $('#calendar_fields'),
-		$dates, $date;
+		$dates, $date, $option;
 	
 	if ( 'touchend' in window )
 	{
@@ -15,6 +15,7 @@
 		$dates = $('<div class="easy-calendar-summary-dates"><strong>{dates_title}</strong><ol/></div>')
 					.on( tap_evt, 'li', picker_change );
 		$date = $('<li/>');
+		$option = $('<option/>');
 		
 		$('<style media="screen"/>')
 			.text('{styles}')
@@ -86,16 +87,25 @@
 		function picker_change()
 		{
 			var $date = $(this),
-				date = $date.text().split('-');
+				$rule = $date.closest('.rule'),
+				$year = $rule.find('.ui-datepicker-year'),
+				date = $date.text().split('-'),
+				year = parseInt( date[0], 10 ),
+				month = parseInt( date[1], 10 ) - 1; // 0 scale
 			
-			$date.closest('.rule')
-				.find('.ui-datepicker-year')
-					.val( parseInt( date[0], 10 ) )
-					.trigger('change')
-					.end()
-				.find('.ui-datepicker-month')
-					.val( parseInt( date[1], 10 ) - 1 )
-					.trigger('change');
+			if ( $year.find('option[value=' + year + ']').length < 1 )
+			{
+				$option.clone()
+					.text( year )
+					.appendTo( $year );
+			}
+			
+			$year.val( year )
+				.trigger('change');
+			
+			$rule.find('.ui-datepicker-month')
+				.val( month )
+				.trigger('change');
 		}
 
 	}
