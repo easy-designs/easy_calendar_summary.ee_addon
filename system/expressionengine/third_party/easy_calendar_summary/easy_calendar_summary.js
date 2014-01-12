@@ -13,7 +13,29 @@
 	{
 		// templates
 		$dates = $('<div class="easy-calendar-summary-dates"><strong>{dates_title}</strong><ol/></div>')
-					.on( tap_evt, 'li', picker_change );
+					// switch the calendar view when a user clicks a date
+					.on( tap_evt, 'li', function(){
+						var $date = $(this),
+							$rule = $date.closest('.rule'),
+							$year = $rule.find('.ui-datepicker-year'),
+							date = $date.text().split('-'),
+							year = parseInt( date[0], 10 ),
+							month = parseInt( date[1], 10 ) - 1; // 0 scale
+
+						if ( $year.find('option[value=' + year + ']').length < 1 )
+						{
+							$option.clone()
+								.text( year )
+								.appendTo( $year );
+						}
+
+						$year.val( year )
+							.trigger('change');
+
+						$rule.find('.ui-datepicker-month')
+							.val( month )
+							.trigger('change');
+					} );
 		$date = $('<li/>');
 		$option = $('<option/>');
 		
@@ -81,31 +103,6 @@
 					.appendTo( $date_list );
 				
 			});
-		}
-		
-		// switch the calendar view when a user clicks a date
-		function picker_change()
-		{
-			var $date = $(this),
-				$rule = $date.closest('.rule'),
-				$year = $rule.find('.ui-datepicker-year'),
-				date = $date.text().split('-'),
-				year = parseInt( date[0], 10 ),
-				month = parseInt( date[1], 10 ) - 1; // 0 scale
-			
-			if ( $year.find('option[value=' + year + ']').length < 1 )
-			{
-				$option.clone()
-					.text( year )
-					.appendTo( $year );
-			}
-			
-			$year.val( year )
-				.trigger('change');
-			
-			$rule.find('.ui-datepicker-month')
-				.val( month )
-				.trigger('change');
 		}
 
 	}
